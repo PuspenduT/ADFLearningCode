@@ -1,0 +1,9 @@
+{
+	"name": "adfworkspace1991",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "c6bcda91-fab6-491a-8e2e-78497dab1b58",
+		"tenantId": "33abc476-0226-471e-84e3-6cfebce84593"
+	}
+}
