@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adfworkspace1991"
+		},
+		"AzureBlobStorage Linked service_connectionString": {
+			"value": ""
+		},
+		"Storage Event Trigger_properties_typeProperties_scope": {
+			"value": "/subscriptions/0237b326-c6ab-4c1f-b8c6-0850ad0a431c/resourceGroups/adf-rg/providers/Microsoft.Storage/storageAccounts/adfstorage1991"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
