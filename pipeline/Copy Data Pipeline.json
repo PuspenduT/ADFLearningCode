@@ -51,17 +51,37 @@
 				"inputs": [
 					{
 						"referenceName": "Dataset1",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"inputfname": {
+								"value": "@pipeline().parameters.givemeinputfname",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"outputs": [
 					{
 						"referenceName": "Dataset2",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"outfname": {
+								"value": "@pipeline().parameters.givemeoutputfname",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			}
 		],
+		"parameters": {
+			"givemeinputfname": {
+				"type": "string"
+			},
+			"givemeoutputfname": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"lastPublishTime": "2025-08-27T14:14:52Z"
 	},

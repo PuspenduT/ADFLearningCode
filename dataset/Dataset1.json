@@ -5,12 +5,20 @@
 			"referenceName": "AzureBlobStorage Linked service",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"inputfname": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "happiness.csv",
+				"fileName": {
+					"value": "@dataset().inputfname",
+					"type": "Expression"
+				},
 				"folderPath": "input",
 				"container": "container1"
 			},
