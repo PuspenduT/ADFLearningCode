@@ -33,12 +33,44 @@
 						"userProperties": [],
 						"typeProperties": {
 							"variableName": "marks",
-							"value": "90"
+							"value": {
+								"value": "@int(pipeline().parameters.givemevalue)",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "output",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Append variable",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "output",
+							"value": {
+								"value": "@variables('marks')",
+								"type": "Expression"
+							}
 						}
 					}
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"givemevalue": {
+						"type": "string"
+					}
 				},
 				"variables": {
 					"marks": {
@@ -258,6 +290,63 @@
 				"[concat(variables('factoryId'), '/datasets/Dataset1')]",
 				"[concat(variables('factoryId'), '/datasets/Dataset2')]",
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage Linked service')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Get Metadata')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Get Metadata1",
+						"type": "GetMetadata",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "Dataset1",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"columnCount",
+								"contentMD5",
+								"exists",
+								"itemName",
+								"itemType",
+								"lastModified",
+								"size",
+								"structure"
+							],
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							},
+							"formatSettings": {
+								"type": "DelimitedTextReadSettings"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Control Flow Activities"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Dataset1')]"
 			]
 		},
 		{
