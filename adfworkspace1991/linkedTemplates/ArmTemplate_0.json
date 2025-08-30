@@ -43,20 +43,12 @@
 					"referenceName": "AzureBlobStorage Linked service",
 					"type": "LinkedServiceReference"
 				},
-				"parameters": {
-					"inputfname": {
-						"type": "string"
-					}
-				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@dataset().inputfname",
-							"type": "Expression"
-						},
+						"fileName": "flowers3.txt",
 						"folderPath": "input",
 						"container": "container1"
 					},
@@ -81,7 +73,7 @@
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
-					"outfname": {
+					"floder": {
 						"type": "string"
 					}
 				},
@@ -90,8 +82,8 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@dataset().outfname",
+						"folderPath": {
+							"value": "@dataset().floder",
 							"type": "Expression"
 						},
 						"container": "container2"
@@ -150,6 +142,20 @@
 								}
 							},
 							"enableStaging": false,
+							"logSettings": {
+								"enableCopyActivityLog": true,
+								"copyActivityLogSettings": {
+									"logLevel": "Info",
+									"enableReliableLogging": false
+								},
+								"logLocationSettings": {
+									"linkedServiceName": {
+										"referenceName": "AzureBlobStorage Linked service",
+										"type": "LinkedServiceReference"
+									},
+									"path": "container2"
+								}
+							},
 							"translator": {
 								"type": "TabularTranslator",
 								"typeConversion": true,
@@ -163,12 +169,7 @@
 							{
 								"referenceName": "Dataset1",
 								"type": "DatasetReference",
-								"parameters": {
-									"inputfname": {
-										"value": "@pipeline().parameters.givemeinputfname",
-										"type": "Expression"
-									}
-								}
+								"parameters": {}
 							}
 						],
 						"outputs": [
@@ -176,8 +177,8 @@
 								"referenceName": "Dataset2",
 								"type": "DatasetReference",
 								"parameters": {
-									"outfname": {
-										"value": "@pipeline().parameters.givemeoutputfname",
+									"floder": {
+										"value": "@pipeline().RunId",
 										"type": "Expression"
 									}
 								}
@@ -188,20 +189,13 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
-				"parameters": {
-					"givemeinputfname": {
-						"type": "string"
-					},
-					"givemeoutputfname": {
-						"type": "string"
-					}
-				},
 				"annotations": [],
 				"lastPublishTime": "2025-08-27T14:14:52Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Dataset1')]",
-				"[concat(variables('factoryId'), '/datasets/Dataset2')]"
+				"[concat(variables('factoryId'), '/datasets/Dataset2')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage Linked service')]"
 			]
 		},
 		{
